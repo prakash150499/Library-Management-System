@@ -26,9 +26,10 @@ This is a library management system developed using the Spring Boot MVC architec
 
 ### Prerequisites
 
-- Java (version X.X)
-- PostgreSQL (version X.X)
-- Apache Maven (version X.X)
+- Java (17)
+- PostgreSQL 
+- Apache Maven
+- Spring Boot 
 
 ### Installation
 
@@ -56,4 +57,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Contact
 
-For inquiries or issues, please contact [Prakash](mailto:prakash4701036@gmail.com)].
+For inquiries or issues, please contact [Prakash](mailto:prakash4701036@gmail.com).
