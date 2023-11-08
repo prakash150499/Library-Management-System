@@ -1,5 +1,6 @@
-package com.example.librarymanagementsystem.model;
+package com.example.librarymanagementsystem.dto.responsetDTO;
 
+import com.example.librarymanagementsystem.model.Book;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,29 +10,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Author {
+public class AuthorResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     String name;
 
     int age;
 
-    @Column(unique = true,nullable = false)
+
     String emailId;
 
-    @UpdateTimestamp
+
     Date lastActivity;
 
-    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
-    List<Book> books = new ArrayList<>();
+    List<BookResponse> booksResponse = new ArrayList<>();
 }

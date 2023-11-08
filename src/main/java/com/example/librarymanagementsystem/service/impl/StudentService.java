@@ -55,4 +55,14 @@ public class StudentService {
         return names;
     }
 
+    // Delete a Student and Library Card
+    public void deleteStudent(int id) {
+        studentRepository.deleteById(id);
+    }
+
+    public void updateStudentAge(int id,int age) {
+        Student student=studentRepository.findById(id).get();
+        student.setAge(age);
+        studentRepository.save(student);
+    }
 }

@@ -32,6 +32,20 @@ public class StudentController {
         return new ResponseEntity("Invalid id!!",HttpStatus.BAD_REQUEST);
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteStudent(@RequestParam int id)
+    {
+        studentService.deleteStudent( id);
+        return new ResponseEntity("Student deleted successfully",HttpStatus.OK);
+    }
+
+    @PutMapping ("/update")
+    public ResponseEntity updateStudentAge(@RequestParam int age,@RequestParam int id)
+    {
+        studentService.updateStudentAge( id,age);
+        return new ResponseEntity("Student Age updated  successfully",HttpStatus.OK);
+    }
+
     @GetMapping("/get-males")
     public List<String> getAllMales(){
         List<String> males = studentService.getAllMales();

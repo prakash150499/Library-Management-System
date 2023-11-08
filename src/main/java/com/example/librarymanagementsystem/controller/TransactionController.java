@@ -27,5 +27,18 @@ public class TransactionController {
         }
     }
 
+    @PutMapping("/return/book-id/{book-id}/student-id/{student-id}")
+    public ResponseEntity returnBook(@PathVariable("book-id") int bookId,
+                                    @PathVariable("student-id") int studentId){
+
+        try{
+            String response= transactionService.returnBook(bookId,studentId);
+            return new ResponseEntity(response,HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

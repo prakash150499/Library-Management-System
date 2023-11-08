@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.service.impl;
 
 import com.example.librarymanagementsystem.Enum.Genre;
+import com.example.librarymanagementsystem.dto.requestDTO.BookRequest;
 import com.example.librarymanagementsystem.dto.responsetDTO.BookResponse;
 import com.example.librarymanagementsystem.exception.AuthorNotFoundException;
 import com.example.librarymanagementsystem.model.Author;
@@ -24,20 +25,19 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public String addBook(Book book) {
+    public BookResponse addBook(BookRequest bookRequest) {
 
         // check if author exists or not
-        Optional<Author> authorOptional = authorRepository.findById(book.getAuthor().getId());
+        Optional<Author> authorOptional = authorRepository.findById(bookRequest.getAuthorID());
         if(authorOptional.isEmpty()){
             throw new AuthorNotFoundException("Invalid author id!!!");
         }
-
+        Book book=BookTransformer.BookRequestToBook(bookRequest);
         Author author = authorOptional.get();
         book.setAuthor(author);
         author.getBooks().add(book);
-
         authorRepository.save(author);  // save both author and book
-        return "Book added successfully";
+        return BookTransformer.BookToBookResponse(book);
 
     }
 
@@ -63,5 +63,10 @@ public class BookService {
             response.add(BookTransformer.BookToBookResponse(book));
         }
         return response;
+    }
+
+    // Delete book
+    public void deleteBook(int bookId) {
+        bookRepository.deleteById(bookId);
     }
 }

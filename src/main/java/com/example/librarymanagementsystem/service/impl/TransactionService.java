@@ -96,4 +96,44 @@ public class TransactionService {
                 .authorName(savedBook.getAuthor().getName())
                 .build();
     }
+
+    public String returnBook(int bookId, int studentId) {
+
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        if(studentOptional.isEmpty()){
+            throw new StudentNotFoundException("Invalid student id!!");
+        }
+
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        if(optionalBook.isEmpty()){
+            throw new BookNotAvailableException("Invalid book id");
+        }
+
+        Book book = optionalBook.get();
+
+        // issue the book
+        Student student = studentOptional.get();
+
+        Transaction transaction = Transaction.builder()
+                .transactionNumber(String.valueOf(UUID.randomUUID()))
+                .transactionStatus(TransactionStatus.SUCCESS)
+                .book(book)
+                .libraryCard(student.getLibraryCard())
+                .build();
+
+        Transaction savedTransaction = transactionRepo.save(transaction);
+
+        book.setIssued(false);
+        bookRepository.save(book);
+        // update book
+
+        book.getTransactions().add(savedTransaction);
+
+        // card changes
+        student.getLibraryCard().getTransactions().add(savedTransaction);
+
+        Book savedBook = bookRepository.save(book);  // book and transaction
+        Student savedStudent = studentRepository.save(student);  // student and transaction
+        return "Book returned Sucessfully";
+    }
 }
